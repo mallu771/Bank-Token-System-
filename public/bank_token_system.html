@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+    <script type="module">
+        import { Queue } from "../library/ds/queue.js";
+        var tokens = new Queue();
+        var tokenNumber = 1;
+        var GenerateTokenButton = document.getElementById("btnGenerateToken");
+
+        function LoadTokens(){
+            document.getElementById("lstTokens").innerHTML="";
+            for(var item of tokens.collection){
+            var opt = document.createElement("option");
+            opt.text = item;
+            opt.value = item;
+            document.getElementById("lstTokens").appendChild(opt);
+            }
+        }
+
+            GenerateTokenButton.addEventListener("click",()=>{
+            var username = prompt("Enter Your Name");
+            tokens.enqueue(`${tokenNumber} [${username}]`);
+            tokenNumber++;
+            alert(`Token Generated`);
+            LoadTokens();
+            })
+
+            document.getElementById("btnCounter1").addEventListener("click",()=>{
+            document.getElementById("lstCounter1").innerHTML = "";
+            var opt = document.createElement("option");
+            opt.text = tokens.dequeue();
+            document.getElementById("lstCounter1").appendChild(opt);
+            if(tokens.size()==0) {
+            document.getElementById("lblCounter1").innerHTML = `No more Customers`;
+            } else {
+            document.getElementById("lblCounter1").innerHTML = `Serving : ${opt.text}`;
+            }
+            LoadTokens();
+            })
+            document.getElementById("btnCounter2").addEventListener("click",()=>{
+            document.getElementById("lstCounter2").innerHTML = "";
+            var opt = document.createElement("option");
+            opt.text = tokens.dequeue();
+            document.getElementById("lstCounter2").appendChild(opt);
+            if(tokens.size()==0) {
+            document.getElementById("lblCounter2").innerHTML = `No more Customers`;
+            } else {
+            document.getElementById("lblCounter2").innerHTML = `Serving : ${opt.text}`;
+            }
+            LoadTokens();
+            })
+            document.getElementById("btnCounter3").addEventListener("click",()=>{
+            document.getElementById("lstCounter3").innerHTML = "";
+            var opt = document.createElement("option");
+            opt.text = tokens.dequeue();
+            document.getElementById("lstCounter3").appendChild(opt);
+            if(tokens.size()==0) {
+            document.getElementById("lblCounter3").innerHTML = `No more Customers`;
+            } else {
+            document.getElementById("lblCounter3").innerHTML = `Serving : ${opt.text}`;
+            }
+            LoadTokens();
+            })
+            document.getElementById("Counter1CheckBox").addEventListener("change",(e)=>{
+                if(e.target.checked){
+                document.getElementById("btnCounter1").disabled=false;
+                } else {
+                document.getElementById("btnCounter1").disabled=true;
+                }
+                })
+                document.getElementById("Counter2CheckBox").addEventListener("change",(e)=>{
+                if(e.target.checked){
+                document.getElementById("btnCounter2").disabled=false;
+                } else {
+                document.getElementById("btnCounter2").disabled=true;
+                }
+                })
+                document.getElementById("Counter3CheckBox").addEventListener("change",(e)=>{
+                if(e.target.checked){
+                document.getElementById("btnCounter3").disabled=false;
+                } else {
+                document.getElementById("btnCounter3").disabled=true;
+                }
+                })
+    </script>
+</head>
+<body class="container-fluid">
+    <div class="row mt-3">
+        <div class="col-3">
+            <h4>Counter-1 <span class="form-switch"><input type="checkbox" id="Counter1CheckBox"
+                class="form-check-input"></span> </h4>
+                <select id="lstCounter1" size="3" class="form-select">
+                </select>
+                <button id="btnCounter1" disabled class="btn mt-2 btn-success">Call Customer</button>
+                <label class="form-label mt-3 bg-dark text-white" id="lblCounter1"></label>
+        </div>
+        <div class="col-3">
+            <h4>Counter2<span class="form-switch"><input type="checkbox" class="form-check-input" id="Counter2CheckBox"></span></h4>
+             <select name="" id="lstCounter2" size="3" class="form-select">
+             </select>
+             <button id="btnCounter2" disabled class=" btn mt-2 btn-primary">Call Customer</button>
+             <label for="" class="form-label mt-3 bg-dark text-white" id="lblCounter2"></label>
+        </div>
+        <div class="col-3">
+            <h4>Counter3<span class="form-switch"><input type="checkbox" class="form-check-input" id="Counter3CheckBox"></span></h4>
+             <select name="" id="lstCounter3" size="3" class="form-select">
+             </select>
+             <button id="btnCounter3" disabled class=" btn mt-2 btn-primary">Call Customer</button>
+             <label for="" class="form-label mt-3 bg-dark text-white" id="lblCounter3"></label>
+        </div>
+    </div>
+    <div class="row text-center" style="margin-top: 100px;">
+        <div>
+        <select id="lstTokens" size="4" class="form-select" style="height: 100px;">
+        </select>
+        <button class="btn mt-2 btn-primary" id="btnGenerateToken">Generate Token</button>
+        </div>
+    </div>
+</body>
+</html>
